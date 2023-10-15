@@ -1,12 +1,20 @@
-export function fizzBuzz(valeur:number):string {
-    if( valeur % 15 == 0){
+export function fizzBuzz(valeur: number): string {
+    if (fizz(valeur) && buzz(valeur)) {
         return "FizzBuzz";
     }
-    if( valeur % 3 == 0 ){
+    if (fizz(valeur)) {
         return "Fizz";
     }
-    if( valeur % 5 == 0){
+    if (buzz(valeur)) {
         return "Buzz";
     }
-    return valeur.toString();    
+    return valeur.toString();
+}
+
+function fizz(valeur: number): boolean {
+    return valeur % 3 == 0;
+}
+
+function buzz(valeur: number): boolean {
+    return valeur % 5 == 0;
 }
