@@ -1,12 +1,14 @@
 export class Game {
 
-    fields: String[][];
-    
-    
-    player:String;
     
 
-    constructor(fields: String[][],player:String="X") {
+    fields: string[][];
+    
+    
+    player:Player;
+    
+
+    constructor(fields: string[][],player:Player=Player.X) {
         this.fields = fields;
         this.player = player;
     }
@@ -43,31 +45,37 @@ export class Game {
     }
 
     private isFull(): boolean {
-        var isfull = true;
-        this.fields.forEach(row => row.forEach( cell => isfull = (isfull && !this.cellIsEmpty(cell)) ));
-        return isfull;
+        var hasEmptyCell = false;
+        this.fields.forEach(row => row.forEach(cell =>{
+            hasEmptyCell = hasEmptyCell || this.cellIsEmpty(cell);
+        }))
+        return !hasEmptyCell;
     }
 
-    private cellIsEmpty(cell:String):boolean {
-        return cell.length == 0;
+    private cellIsEmpty(cell:string):boolean {
+        return cell === " ";
     }
 
     public getPossiblePlayPositions():Position[]{
         var positions:Position[] =  [];
-        for( var x = 0 ; x < 3 ; x ++){
-            for( var y = 0 ; y < 3 ; y ++){
-                if(this.cellIsEmpty(this.fields[x][y])){
+        var x = 0;
+        this.fields.forEach(row =>{
+            var y = 0; 
+            row.forEach(cell =>{
+                if(this.cellIsEmpty(cell)){
                     positions.push(new Position(x,y));
-                } 
-            }    
-        }
+                }
+                y ++;                
+            })
+            x ++;
+        })
         return positions;
     }
 
     public play(position:Position){
         if(!this.isOver()){
             if(this.cellIsEmpty(this.fields[position.getX()][position.getY()])){
-                this.fields[position.getX()][position.getY()] = "X";
+                this.fields[position.getX()][position.getY()] = this.player.toString();
             }
             this.nextPlayer();
         }
@@ -75,14 +83,21 @@ export class Game {
 
     private nextPlayer(){
         if(!this.isOver()){
-            this.player = (this.player == "X" ? "O" : "X");
+            this.player = (this.player == Player.X ? Player.O : Player.X);
         }
     }
 
-    public currentPlayer():String{
+    public currentPlayer():Player{
         return this.player;
     }
 }
+
+enum Player{
+    X,
+    O
+}
+
+
 
 class Position {
 

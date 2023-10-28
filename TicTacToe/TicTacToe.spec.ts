@@ -41,85 +41,97 @@ import { Game } from "./TickTacToe";
 
 test('a game is over when all fields are taken', () => {
     var game = new Game(
-    [["X","X","X"]
-    ,["X","X","X"]
-    ,["X","X","X"]]);
+    [["X","O","X"]
+    ,["O","O","X"]
+    ,["X","X","O"]]);
     expect(game.isOver()).toBe(true);
     var game = new Game(
-    [["","",""]
-    ,["","",""]
-    ,["","",""]]);
+    [[" "," "," "]
+    ,[" "," "," "]
+    ,[" "," "," "]]);
     expect(game.isOver()).toBe(false);    
 });
 
 test('a game is over when all fields in a column are taken by a player', () => {
     var  game = new Game(
-    [["X","",""]
-    ,["X","",""]
-    ,["X","",""]]
+    [["X"," "," "]
+    ,["X"," "," "]
+    ,["X"," "," "]]
     );
     expect(game.isOver()).toBe(true);
     var  game = new Game(
-    [["","","O"]
-    ,["","","O"]
-    ,["","","O"]]
+    [[" "," ","0"]
+    ,[" "," ","0"]
+    ,[" "," ","0"]]
     );
-    expect(game.isOver()).toBe(true);      
+    expect(game.isOver()).toBe(true);
 });
 test('a game is over when all fields in a row are taken by a player', () => {
     var  game = new Game(
-    [["","",""]
-    ,["","",""]
+    [[" "," "," "]
+    ,[" "," "," "]
     ,["X","X","X"]]
     );
     expect(game.isOver()).toBe(true);
     var  game = new Game(
     [["O","O","O"]
-    ,["","",""]
-    ,["","",""]]
+    ,[" "," "," "]
+    ,[" "," "," "]]
     );
     expect(game.isOver()).toBe(true);      
 });
 
 test('a game is over when all fields in a diagonal are taken by a player', () => {
     var  game = new Game(
-    [["","","X"]
-    ,["","X",""]
-    ,["X","",""]]
+    [[" "," ","X"]
+    ,[" ","X"," "]
+    ,["X"," "," "]]
     );
     expect(game.isOver()).toBe(true);
     var  game = new Game(
-    [["O","",""]
-    ,["","O",""]
-    ,["","","O"]]
+    [["O"," "," "]
+    ,[" ","O"," "]
+    ,[" "," ","O"]]
     );
     expect(game.isOver()).toBe(true);      
 });
 
 test("a player can take a field if not already taken", () => {
     var  game = new Game(
-        [["","",""]
-        ,["","",""]
-        ,["","",""]]
+        [[" "," "," "]
+        ,[" "," "," "]
+        ,[" "," "," "]]
         );
     var possiblePlayPositions = game.getPossiblePlayPositions(); 
     expect(possiblePlayPositions.length).toBe(9);
     game.play(possiblePlayPositions[0]);
     var possiblePlayPositions = game.getPossiblePlayPositions();
     expect(possiblePlayPositions.length).toBe(8);
+
+    var game = new Game(
+        [["X","O","X"]
+        ,["O","O","X"]
+        ,["X"," ","O"]]);
+    var possiblePlayPositions = game.getPossiblePlayPositions(); 
+    expect(possiblePlayPositions[0].x).toBe(2);
+    expect(possiblePlayPositions[0].y).toBe(1);
+
 });
 
 test("players take turns taking fields until the game is over",() => {
     var  game = new Game(
-        [["","",""]
-        ,["","",""]
-        ,["","",""]]
+        [[" "," "," "]
+        ,[" "," "," "]
+        ,[" "," "," "]]
         );
     var possiblePlayPositions = game.getPossiblePlayPositions();
     var joueur1 = game.currentPlayer(); 
     game.play(possiblePlayPositions[0])
     var joueur2 = game.currentPlayer();
+    game.play(possiblePlayPositions[1])
+    var joueur3 = game.currentPlayer();
     expect(joueur1).not.toEqual(joueur2);
+    expect(joueur1).toEqual(joueur3);
    
 });
 
