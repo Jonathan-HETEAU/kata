@@ -60,11 +60,23 @@ test('a game is over when all fields in a column are taken by a player', () => {
     );
     expect(game.isOver()).toBe(true);
     var  game = new Game(
+    [["X"," "," "]
+    ,["O"," "," "]
+    ,["X"," "," "]]
+    );
+    expect(game.isOver()).toBe(false);
+    var  game = new Game(
     [[" "," ","0"]
     ,[" "," ","0"]
     ,[" "," ","0"]]
     );
     expect(game.isOver()).toBe(true);
+    var  game = new Game(
+    [[" "," ","0"]
+    ,[" "," ","X"]
+    ,[" "," ","0"]]
+    );
+    expect(game.isOver()).toBe(false);
 });
 test('a game is over when all fields in a row are taken by a player', () => {
     var  game = new Game(
@@ -74,11 +86,23 @@ test('a game is over when all fields in a row are taken by a player', () => {
     );
     expect(game.isOver()).toBe(true);
     var  game = new Game(
+    [[" "," "," "]
+    ,[" "," "," "]
+    ,["O","X","X"]]
+    );
+    expect(game.isOver()).toBe(false);
+    var  game = new Game(
     [["O","O","O"]
     ,[" "," "," "]
     ,[" "," "," "]]
     );
-    expect(game.isOver()).toBe(true);      
+    expect(game.isOver()).toBe(true);     
+    var  game = new Game(
+    [["O","O","X"]
+    ,[" "," "," "]
+    ,[" "," "," "]]
+    );
+    expect(game.isOver()).toBe(false);      
 });
 
 test('a game is over when all fields in a diagonal are taken by a player', () => {

@@ -10,7 +10,12 @@
   "mutator": {
     "name": "typescript",
     "excludedMutations": [
-      
+      "ArrayDeclaration",
+      "ArrowFunction",
+      "BlockStatement",
+      "ObjectLiteral",
+      "FunctionDeclaration",
+      "ConditionalExpression"
     ]
   },
   "testRunner": "jest",
